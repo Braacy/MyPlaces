@@ -9,7 +9,7 @@ import UIKit
 
 class TableViewController: UITableViewController {
 
-    let restaurantsNames = ["Burge's", "Pizzeria", "Pizza", "MacDonadls", "Pasta", "Sushi", "Tacos", "Steak", "Fish", "Cake"]
+    let restaurantsNames = ["Балкан Гриль", "Бочка", "Вкусные истории", "Дастархан", "Индокитай", "Классик", "Шок", "Bonsai", "Burger Heroes", "Kitchen","Love&Life", "Morris Pub", "Sherlock Holmes", "Speak Easy", "X.O"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +27,7 @@ class TableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
         cell.textLabel?.text = restaurantsNames[indexPath.row]
+        cell.imageView?.image = UIImage(named: restaurantsNames[indexPath.row])
         return cell
     }
 
