@@ -63,10 +63,21 @@ class TableViewController: UITableViewController {
     }
     
     //MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetail" {
+            guard let indexPath = tableView.indexPathForSelectedRow else {return}
+            let place = places[indexPath.row]
+            
+            let newPlaceVC = segue.destination as! NewPlaceTableViewController
+            newPlaceVC.currentPlace = place
+        }
+    }
+    
     @IBAction func undwindSegue(_ segue: UIStoryboardSegue) {
         guard let newPlaceVC = segue.source as? NewPlaceTableViewController else {return}
         
-        newPlaceVC.saveNewPlace()
+        newPlaceVC.savePlace()
 
         tableView.reloadData()
         
