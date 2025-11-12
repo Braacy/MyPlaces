@@ -10,9 +10,15 @@ import RealmSwift
 
 class TableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    //cв-во, с типом для Рилм БД
     var places: Results<Place>!
     
+    //логическое св-во сортировки по возрастанию
+    var ascendingSorting = true
+    
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var reverseSortingButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +51,9 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     //MARK: - Table view delegate
+    
+    ///ВАРИАНТЫ УДАЛЕНИЯ СТРОК С ТАБЛИЦЫ А ТАК ЖЕ С БД
+    
 //    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 //        
 //        let place = places[indexPath.row]
@@ -77,6 +86,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     @IBAction func undwindSegue(_ segue: UIStoryboardSegue) {
+        //Передача данных между вью в ОБРАТНОМ (Соурс) направлении
         guard let newPlaceVC = segue.source as? NewPlaceTableViewController else {return}
         
         newPlaceVC.savePlace()
@@ -85,4 +95,31 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     }
 
+    @IBAction func sortSelectionPressed(_ sender: UISegmentedControl) {
+        sorting()
+    }
+    
+    @IBAction func reverseSortingPressed(_ sender: Any) {
+        //меняем значение на противоположное
+        ascendingSorting.toggle()
+        
+        if ascendingSorting {
+            reverseSortingButton.image = UIImage(imageLiteralResourceName: "AZ")
+        } else {
+            reverseSortingButton.image = UIImage(imageLiteralResourceName: "ZA")
+        }
+        
+        sorting()
+    }
+    
+    //отдельный приватный метод сортировки что бы не повторяться
+    private func sorting() {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            places = places.sorted(byKeyPath: "date", ascending: ascendingSorting)
+        } else {
+            places = places.sorted(byKeyPath: "name", ascending: ascendingSorting)
+        }
+        tableView.reloadData()
+    }
+    
 }
