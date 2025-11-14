@@ -10,11 +10,27 @@ import RealmSwift
 
 class TableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    //cв-во для ревлизации поиска
+    private let searchController = UISearchController(searchResultsController: nil)
+    
     //cв-во, с типом для Рилм БД
-    var places: Results<Place>!
+    private var places: Results<Place>!
+    
+    //массив для помищения отфильтрованых записей при поиске
+    private var filteredPlaces: Results<Place>!
+    
+    //логическое св-во, говорящее пустая строка поиска или нет
+    private var searchBarIsEmpty: Bool {
+        guard let text = searchController.searchBar.text else { return false }
+        return text.isEmpty
+    }
+    //вспомогательное св-во которое возвращает true когда поисковый запрос активирован
+    private var isFiltering: Bool {
+        return searchController.isActive && !searchBarIsEmpty
+    }
     
     //логическое св-во сортировки по возрастанию
-    var ascendingSorting = true
+    private var ascendingSorting = true
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
@@ -23,6 +39,13 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //настройка seatch controller
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        
         places = realm.objects(Place.self)
 
     }
@@ -30,14 +53,23 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     // MARK: - Table view data source
 
      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return places.isEmpty ? 0 : places.count
+         if isFiltering {
+             return filteredPlaces.count
+         }
+         return places.isEmpty ? 0 : places.count
     }
 
     
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CastomTableViewCell
 
-        let place = places[indexPath.row]
+         var place = Place()
+         
+         if isFiltering {
+             place = filteredPlaces[indexPath.row]
+         } else {
+             place = places[indexPath.row]
+         }
         
         cell.nameLabel.text = place.name
         cell.locationLabel.text = place.location
@@ -78,7 +110,13 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             guard let indexPath = tableView.indexPathForSelectedRow else {return}
-            let place = places[indexPath.row]
+            let place: Place
+            //передача на экран редактирования с поискового вью
+            if isFiltering {
+                place = filteredPlaces[indexPath.row]
+            } else {
+                place = places[indexPath.row]
+            }
             
             let newPlaceVC = segue.destination as! NewPlaceTableViewController
             newPlaceVC.currentPlace = place
@@ -119,6 +157,20 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         } else {
             places = places.sorted(byKeyPath: "name", ascending: ascendingSorting)
         }
+        tableView.reloadData()
+    }
+    
+}
+//расширение для реализации поиска
+extension TableViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+    
+    private func filterContentForSearchText(_ searchText: String) {
+        filteredPlaces = places.filter("name CONTAINS[c] %@ OR location CONTAINS[c] %@ OR type CONTAINS[c] %@", searchText, searchText, searchText)
+        
         tableView.reloadData()
     }
     

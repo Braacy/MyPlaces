@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 class NewPlaceTableViewController: UITableViewController {
-
+    
     var imageIsChanged = false
     var currentPlace: Place?
     
