@@ -262,6 +262,23 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="140" id="ADy-5C-qpk">
+                                        <rect key="frame" x="0.0" y="525" width="440" height="140"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ADy-5C-qpk" id="pFe-9p-KtK">
+                                            <rect key="frame" x="0.0" y="0.0" width="440" height="140"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="7nV-wX-IUI" customClass="RaitingControl" customModule="MyPlaces" customModuleProvider="target">
+                                                    <rect key="frame" x="120" y="15" width="200" height="110"/>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="7nV-wX-IUI" firstAttribute="centerX" secondItem="pFe-9p-KtK" secondAttribute="centerX" id="LpU-Fc-w5f"/>
+                                                <constraint firstItem="7nV-wX-IUI" firstAttribute="centerY" secondItem="pFe-9p-KtK" secondAttribute="centerY" id="hk0-Lw-HCy"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
