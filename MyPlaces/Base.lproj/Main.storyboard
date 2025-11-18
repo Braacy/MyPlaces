@@ -312,6 +312,7 @@
                         <outlet property="placeLocation" destination="uuC-Sr-4EB" id="TMp-Y5-yh9"/>
                         <outlet property="placeName" destination="Kz3-cu-qVh" id="Vt0-ZF-5g1"/>
                         <outlet property="placeType" destination="1qB-Hr-sZi" id="79e-hV-wRd"/>
+                        <outlet property="raitingControl" destination="7nV-wX-IUI" id="5Lg-KP-DgX"/>
                         <outlet property="saveButton" destination="sx9-5e-pao" id="5fP-fE-Hla"/>
                     </connections>
                 </tableViewController>

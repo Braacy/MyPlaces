@@ -11,14 +11,15 @@ import RealmSwift
 class NewPlaceTableViewController: UITableViewController {
     
     var imageIsChanged = false
-    var currentPlace: Place?
+    var currentPlace: Place!
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var placeImage: UIImageView!
     @IBOutlet weak var placeLocation: UITextField!
     @IBOutlet weak var placeName: UITextField!
     @IBOutlet weak var placeType: UITextField!
-        
+    @IBOutlet weak var raitingControl: RaitingControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         saveButton.isEnabled = false
@@ -73,7 +74,8 @@ class NewPlaceTableViewController: UITableViewController {
         let newPlace = Place(name: placeName.text!,
                              location: placeLocation.text,
                              type: placeType.text,
-                             imageData: imageData)
+                             imageData: imageData,
+                             raiting: Double(raitingControl.raiting))
         
         if currentPlace != nil {
             try! realm.write{
@@ -81,6 +83,7 @@ class NewPlaceTableViewController: UITableViewController {
                 currentPlace?.location = newPlace.location
                 currentPlace?.type = newPlace.type
                 currentPlace?.imageData = newPlace.imageData
+                currentPlace?.raiting = newPlace.raiting
             }
         } else {
             StorageManager.saveObject(newPlace)
@@ -101,6 +104,7 @@ class NewPlaceTableViewController: UITableViewController {
         placeName.text = currentPlace?.name
         placeLocation.text = currentPlace?.location
         placeType.text = currentPlace?.type
+        raitingControl.raiting = Int(currentPlace.raiting)
     }
 }
     
