@@ -7,11 +7,15 @@
 
 import UIKit
 
-class RaitingControl: UIStackView {
+@IBDesignable class RaitingControl: UIStackView {
 //MARK: - Properties
     private var raitingButtons: [UIButton] = []
     
-    var raiting = 0
+    var raiting = 0 {
+        didSet{
+            updateButtonSelectionStates()
+        }
+    }
     
     @IBInspectable var starSize: CGSize = CGSize(width: 44.0, height: 44.0){
         didSet {
@@ -38,7 +42,17 @@ class RaitingControl: UIStackView {
     //MARK: - Button Action
     
     @objc func raitingBtnTapped(button: UIButton) {
-        print("Button tapped")
+        guard let index = raitingButtons.firstIndex(of: button) else {return}
+        
+        //определяем рейтинг, соответствующий звезде
+        let selectedRaiting = index + 1
+        
+        if selectedRaiting == raiting{
+            raiting = 0
+        } else {
+            raiting = selectedRaiting
+        }
+        
     }
     
     
@@ -52,12 +66,31 @@ class RaitingControl: UIStackView {
         }
         raitingButtons.removeAll()
         
+        //загрузка картинки кнопки
+        let bundle = Bundle(for: type(of: self))
+        
+        let filledStar = UIImage(named: "filledStar",
+                                 in: bundle, compatibleWith:
+                                    self.traitCollection)
+        
+        let emptyStar = UIImage(named: "emptyStar",
+                                in: bundle,
+                                compatibleWith: self.traitCollection)
+        
+        let highLightedStar = UIImage(named: "highLightedStar",
+                                      in: bundle,
+                                      compatibleWith: self.traitCollection)
         
         //создаем кнопки
-        
         for _ in 0..<starCount {
             let button = UIButton()
-            button.backgroundColor = .red
+            
+            // определем изображение кнопки
+            button.setImage(emptyStar, for: .normal)
+            button.setImage(filledStar, for: .selected)
+            button.setImage(highLightedStar, for: .highlighted)
+            button.setImage(highLightedStar, for: [.highlighted, .selected])
+            
             
             //добавляем констрейты
             button.translatesAutoresizingMaskIntoConstraints = false
@@ -72,6 +105,13 @@ class RaitingControl: UIStackView {
             
             //после каждой итерации помещение новой кнопки в масив кнопок
             raitingButtons.append(button)
+        }
+        updateButtonSelectionStates()
+    }
+    
+    private func updateButtonSelectionStates() {
+        for (index, button) in raitingButtons.enumerated() {
+            button.isSelected = index < raiting
         }
     }
 }

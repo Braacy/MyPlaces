@@ -84,19 +84,10 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     //MARK: - Table view delegate
     
-    ///ВАРИАНТЫ УДАЛЕНИЯ СТРОК С ТАБЛИЦЫ А ТАК ЖЕ С БД
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
     
-//    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        
-//        let place = places[indexPath.row]
-//        
-//        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (_, _, _) in
-//            StorageManager.deleteObject(place)
-//            tableView.deleteRows(at: [indexPath], with: .automatic)
-//        }
-//        
-//        return UISwipeActionsConfiguration(actions: [deleteAction])
-//    }
      func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let place = places[indexPath.row]
         if editingStyle == .delete {

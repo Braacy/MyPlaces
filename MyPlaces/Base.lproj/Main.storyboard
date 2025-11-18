@@ -269,13 +269,21 @@
                                             <rect key="frame" x="0.0" y="0.0" width="440" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="7nV-wX-IUI" customClass="RaitingControl" customModule="MyPlaces" customModuleProvider="target">
+                                                <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="110" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="7nV-wX-IUI" customClass="RaitingControl" customModule="MyPlaces" customModuleProvider="target">
                                                     <rect key="frame" x="120" y="15" width="200" height="110"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="size" keyPath="starSize">
+                                                            <size key="value" width="45" height="45"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="starCount">
+                                                            <integer key="value" value="5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="7nV-wX-IUI" firstAttribute="centerX" secondItem="pFe-9p-KtK" secondAttribute="centerX" id="LpU-Fc-w5f"/>
-                                                <constraint firstItem="7nV-wX-IUI" firstAttribute="centerY" secondItem="pFe-9p-KtK" secondAttribute="centerY" id="hk0-Lw-HCy"/>
+                                                <constraint firstItem="7nV-wX-IUI" firstAttribute="centerY" secondItem="pFe-9p-KtK" secondAttribute="centerY" id="ZWN-ir-CTU"/>
+                                                <constraint firstItem="7nV-wX-IUI" firstAttribute="centerX" secondItem="pFe-9p-KtK" secondAttribute="centerX" id="nQ2-UI-hpM"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
