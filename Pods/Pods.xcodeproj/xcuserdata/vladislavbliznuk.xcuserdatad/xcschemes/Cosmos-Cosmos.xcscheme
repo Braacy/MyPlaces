@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9CBDB695F394C0CEE37BF86B21344705"
-               BuildableName = "Pods_MyPlaces.framework"
-               BlueprintName = "Pods-MyPlaces"
+               BlueprintIdentifier = "B3A2CBA964AA08D217E799B8849DF4D5"
+               BuildableName = "Cosmos.bundle"
+               BlueprintName = "Cosmos-Cosmos"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

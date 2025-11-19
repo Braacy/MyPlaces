@@ -7,11 +7,13 @@
 
 import UIKit
 import RealmSwift
+import Cosmos
 
 class NewPlaceTableViewController: UITableViewController {
     
     var imageIsChanged = false
     var currentPlace: Place!
+    var currentRainting = 0.0
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var placeImage: UIImageView!
@@ -19,6 +21,7 @@ class NewPlaceTableViewController: UITableViewController {
     @IBOutlet weak var placeName: UITextField!
     @IBOutlet weak var placeType: UITextField!
     @IBOutlet weak var raitingControl: RaitingControl!
+    @IBOutlet weak var cosmosView: CosmosView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +29,11 @@ class NewPlaceTableViewController: UITableViewController {
         placeName.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
         
         setupEditScreen()
+        
+        cosmosView.settings.fillMode = .half
+        cosmosView.didTouchCosmos = { rating in
+            self.currentRainting = rating
+        }
     }
 // MARK: - Table view delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -75,7 +83,7 @@ class NewPlaceTableViewController: UITableViewController {
                              location: placeLocation.text,
                              type: placeType.text,
                              imageData: imageData,
-                             raiting: Double(raitingControl.raiting))
+                             raiting: currentRainting)
         
         if currentPlace != nil {
             try! realm.write{
@@ -104,7 +112,7 @@ class NewPlaceTableViewController: UITableViewController {
         placeName.text = currentPlace?.name
         placeLocation.text = currentPlace?.location
         placeType.text = currentPlace?.type
-        raitingControl.raiting = Int(currentPlace.raiting)
+        cosmosView.rating = currentPlace.raiting
     }
 }
     
