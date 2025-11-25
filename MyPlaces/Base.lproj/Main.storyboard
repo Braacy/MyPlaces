@@ -429,6 +429,9 @@
                             <constraint firstItem="d6O-6z-CvU" firstAttribute="bottom" secondItem="nOv-r4-srD" secondAttribute="bottom" id="xoD-dJ-24G"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="d6O-6z-CvU" id="e2O-yk-HXC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1QF-Hv-XYq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
