@@ -15,13 +15,29 @@ class MapViewController: UIViewController {
     var place = Place()
     let annotationIdentifier = "annotationIdentifier"
     
+    let regionInMeters: Double = 10000
+    
     @IBOutlet weak var mapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
         setupPlacemark()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         checkLocationServices()
+    }
+    
+    @IBAction func centerViewInUserLocation() {
+        
+        if let location = locationManager.location?.coordinate {
+            let region = MKCoordinateRegion(center: location,
+                                            latitudinalMeters: regionInMeters,
+                                            longitudinalMeters: regionInMeters)
+            mapView.setRegion(region, animated: true)
+        }
     }
     
     @IBAction func closeVC() {
@@ -62,7 +78,9 @@ class MapViewController: UIViewController {
          setupLocationManager()
             checkLocationAutorization()
         } else {
-            
+            showAllert(
+                title: "Location services are Disabled",
+                message: "To enable it go to Settings > Privacy > Location Services and turn it on.")
         }
     }
     private func setupLocationManager() {
@@ -76,6 +94,9 @@ class MapViewController: UIViewController {
             mapView.showsUserLocation = true
             break
         case .denied:
+            showAllert(
+                title: "Your Location is not allowed",
+                message: "To give permission go to Settings > Privacy > Location Services and turn it on.")
             break
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
@@ -86,6 +107,14 @@ class MapViewController: UIViewController {
         @unknown default:
             print("new case is available")
         }
+    }
+    
+    private func showAllert(title: String, message: String) {
+        let allert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        
+        allert.addAction(okAction)
+        present(allert, animated: true)
     }
 }
 
