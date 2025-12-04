@@ -282,7 +282,7 @@
                                                         <imageReference key="image" image="location.magnifyingglass" catalog="system" symbolScale="large"/>
                                                     </buttonConfiguration>
                                                     <connections>
-                                                        <segue destination="eT4-Za-uM3" kind="presentation" identifier="getAdress" modalPresentationStyle="fullScreen" id="n76-Ps-WEP"/>
+                                                        <segue destination="eT4-Za-uM3" kind="presentation" identifier="getAddress" modalPresentationStyle="fullScreen" id="n76-Ps-WEP"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -499,7 +499,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="adressLabel" destination="UQI-bE-NJI" id="dVe-pX-xp9"/>
+                        <outlet property="addressLabel" destination="UQI-bE-NJI" id="dVe-pX-xp9"/>
                         <outlet property="doneBtnLabel" destination="d9q-CA-fYt" id="exI-KG-JTM"/>
                         <outlet property="mapPinImage" destination="ex5-5Z-q4e" id="C91-5C-Eh3"/>
                         <outlet property="mapView" destination="d6O-6z-CvU" id="e2O-yk-HXC"/>
@@ -556,7 +556,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="vGI-cv-gbE"/>
+        <segue reference="n76-Ps-WEP"/>
         <segue reference="4GR-JD-fkJ"/>
     </inferredMetricsTieBreakers>
     <resources>
